@@ -1,0 +1,17 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Tic Tac Toe";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<h2>Tic Tac Toe</h2>
+
+<form method="POST" action="TicTacToe/JoinOrCreate">
+    <label>Player Name: </label>
+    <input type="text" name="PlayerName" />
+    <label>Game Name: </label>
+    <input type="text" name="GameName" />
+
+    <input type="submit" value="Create or Join Game" />
+</form>

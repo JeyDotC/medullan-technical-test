@@ -1,0 +1,55 @@
+﻿@using TicTacToe.Models
+@model TicTacToe.Models.Game
+
+@{
+    ViewBag.Title = "Tic Tac Toe";
+    Layout = "../Shared/_Layout.cshtml";
+    var Player = ViewBag.Player as Player;
+}
+
+<h2>Tic Tac Toe: @Model.Name</h2>
+
+@if (@Model.Player2 == null)
+{
+    <h3>@Model.Player1.Name waiting for player 2</h3>
+}
+else
+{
+    <h3>@Model.Player1.Name vs @Model.Player2.Name</h3>
+}
+
+<div>
+    @ViewBag.Info
+</div>
+<div>
+    You are playing as @Player.Symbol
+</div>
+<a href="">Refresh</a>
+<table>
+    @{int i = 0;}
+    @foreach (var row in Model.Board)
+    {
+        int j = 0;
+        <tr>
+            @foreach (var cell in row)
+            {
+                <td>
+                    @if (cell == null)
+                    {
+                        <form method="POST" action="Move">
+                            <input type="hidden" name="X" value="@i"/>
+                            <input type="hidden" name="Y" value="@j"/>
+                            <input type="submit" value="" />
+                        </form>
+                    }
+                    else
+                    {
+                        @cell.Symbol
+                    }
+                </td>
+                    j++;
+            }
+            @{i++;}
+        </tr>
+    }
+</table>
