@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://localhost:8080/dummyfiles/dummysoap.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="Vip" targetNamespace="http://localhost:8080/dummyfiles/dummysoap.php">
+    <types>
+        <xsd:schema targetNamespace="http://localhost:8080/dummyfiles/dummysoap.php">
+            <xsd:complexType name="RequestHeader">
+                <xsd:all>
+                    <xsd:element name="LocationAppID" type="xsd:int"/>
+                    <xsd:element name="SecurityToken" type="xsd:string"/>
+                    <xsd:element name="CustomerEntityID" type="xsd:int" nillable="true"/>
+                    <xsd:element name="BrandID" type="xsd:int" nillable="true"/>
+                </xsd:all>
+            </xsd:complexType>
+            <xsd:complexType name="Address">
+                <xsd:all>
+                    <xsd:element name="FirstName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="LastName" type="xsd:string" nillable="true"/>
+                    <xsd:element name="AddressLine1" type="xsd:string" nillable="true"/>
+                    <xsd:element name="AddressLine2" type="xsd:string" nillable="true"/>
+                    <xsd:element name="EmailAddress" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PhoneNumber" type="xsd:string" nillable="true"/>
+                    <xsd:element name="AddressType" type="xsd:string" nillable="true"/>
+                    <xsd:element name="City" type="xsd:string" nillable="true"/>
+                    <xsd:element name="StateCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="PostalCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="CountryCode" type="xsd:string" nillable="true"/>
+                </xsd:all>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <portType name="VipPort">
+        <operation name="AddressSet">
+            <documentation>
+                Method used for authentication. It accepts the location application identifier and the user name and password setup for the consumer store. It returns a valid security token or an authentication error. Token must be used on calls to other web methods in further sections below.
+</documentation>
+            <input message="tns:AddressSetIn"/>
+            <output message="tns:AddressSetOut"/>
+        </operation>
+    </portType>
+    <binding name="VipBinding" type="tns:VipPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="AddressSet">
+            <soap:operation soapAction="http://localhost:8080/dummyfiles/dummysoap.php#AddressSet"/>
+            <input>
+                <soap:header message="tns:RequestHeader" part="request_header" use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/dummyfiles/dummysoap.php"/>
+            </input>
+            <output>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/dummyfiles/dummysoap.php"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="VipService">
+        <port name="VipPort" binding="tns:VipBinding">
+            <soap:address location="http://localhost:8080/dummyfiles/dummysoap.php"/>
+        </port>
+    </service>
+    <message name="AddressSetIn">
+        <part name="address" type="tns:Address"/>
+        <part name="request_header" element="tns:RequestHeader"/>
+    </message>
+    <message name="AddressSetOut">
+        <part name="return" type="xsd:string"/>
+    </message>
+</definitions>
